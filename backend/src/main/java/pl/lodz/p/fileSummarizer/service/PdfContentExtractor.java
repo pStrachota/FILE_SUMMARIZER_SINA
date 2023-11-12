@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pl.lodz.p.fileSummarizer.exception.GeneralException;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ public class PdfContentExtractor implements ContentExtractor{
             final PDFTextStripper pdfStripper = new PDFTextStripper();
             return pdfStripper.getText(document);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Cannot read text from PDF file");
+            throw new GeneralException("Cannot read text from PDF file");
         }
     }
 }
