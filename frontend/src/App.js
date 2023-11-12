@@ -98,8 +98,8 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header"></header>
+    <div className="App container mx-auto">
+      <header className="App-header">Tekst</header>
       <ToastContainer position="top-center" autoClose={2000} />
     </div>
   );
