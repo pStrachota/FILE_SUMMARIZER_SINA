@@ -3,6 +3,7 @@ package pl.lodz.p.fileSummarizer.service;
 import org.apache.poi.xslf.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pl.lodz.p.fileSummarizer.exception.GeneralException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class PptxContentExtractor implements ContentExtractor {
             }
             return sb.toString();
         } catch (IOException e) {
-            throw new IllegalArgumentException("Cannot read text from PPTX file");
+            throw new GeneralException("Cannot read text from PPTX file");
         }
     }
 }

@@ -5,10 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import pl.lodz.p.fileSummarizer.dto.ChatRequest;
 import pl.lodz.p.fileSummarizer.dto.ChatResponse;
+import pl.lodz.p.fileSummarizer.exception.CannotReadTextException;
+import pl.lodz.p.fileSummarizer.exception.OpenAiApiException;
 
 @Service
 @Slf4j
@@ -41,15 +44,22 @@ public class ContentExtractorControl {
         String text = extractorFactory.executeExtractor(fileExtension, multipartFile);
 
         if (text == null || text.isEmpty()) {
-            throw new IllegalArgumentException("Cannot read text from PDF file");
+            throw new CannotReadTextException("Cannot read text from PDF file");
         } else {
             String prompt = String.format(PROMPT_TEMPLATE, contextLength, language, text);
             ChatRequest request = new ChatRequest(model, prompt);
 
-            ChatResponse response = restTemplate.postForObject(apiUrl, request, ChatResponse.class);
+            ChatResponse response;
+            try {
+                response = restTemplate.postForObject(apiUrl, request, ChatResponse.class);
+            } catch(RestClientException e) {
+                throw new OpenAiApiException(e.getMessage());
+            }
+
             if (response != null) {
                 text = response.getChoices().get(0).getMessage().getContent();
             }
+
         }
 
         return text;
