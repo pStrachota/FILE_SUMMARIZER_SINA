@@ -61,7 +61,7 @@ public class ContentExtractorControl {
         checkNumberOfTokens(text);
 
         if (text.isEmpty()) {
-            throw new EmptyFileContentException("Cannot read text from PDF file");
+            throw new EmptyFileContentException("File content is empty");
         }
 
         String prompt = String.format(PROMPT_TEMPLATE, contextLength, language, text);

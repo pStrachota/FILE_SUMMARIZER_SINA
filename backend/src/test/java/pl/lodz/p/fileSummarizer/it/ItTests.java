@@ -37,6 +37,7 @@ class ItTests {
     }
 
     @Test
+    @Order(1)
     void shouldReturnResponseWhenParametersAreCorrectPdf() throws FileNotFoundException {
         String filePath = Paths.get("src", "test", "resources", "ZASOBY.pdf").toString();
         String language = "English";
@@ -54,8 +55,70 @@ class ItTests {
                 .statusCode(HttpStatus.OK.value());
     }
 
+    @Test
+    @Order(2)
+    void shouldThrowExceptionWhenFileExtensionNotMatch() throws FileNotFoundException {
+        String filePath = Paths.get("src", "test", "resources", "ZASOBY.PDF").toString();
+        String language = "English";
+        String fileExtension = "txt";
+
+        given()
+                .multiPart("file", getFile(filePath))
+                .formParam("language", language)
+                .formParam("fileExtension", fileExtension)
+                .formParam("contextLength", 5)
+                .contentType(ContentType.MULTIPART)
+                .when()
+                .post("/api/v1/extractor")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("exceptionMessage", org.hamcrest.Matchers.equalTo("File extension is not supported"));
+    }
 
     @Test
+    @Order(3)
+    void shouldThrowExceptionWhenFileContentIsEmpty() throws FileNotFoundException {
+        String filePath = Paths.get("src", "test", "resources", "blank.txt").toString();
+        String language = "English";
+        String fileExtension = "txt";
+
+        given()
+                .multiPart("file", getFile(filePath))
+                .formParam("language", language)
+                .formParam("fileExtension", fileExtension)
+                .formParam("contextLength", 5)
+                .contentType(ContentType.MULTIPART)
+                .when()
+                .post("/api/v1/extractor")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("exceptionMessage", org.hamcrest.Matchers.equalTo("File content is empty"));
+    }
+
+    @Test
+    @Order(4)
+    void shouldThrowExceptionWhenFileSizeIsTooBig() throws FileNotFoundException, InterruptedException {
+        String filePath = Paths.get("src", "test", "resources", "toobig.pdf").toString();
+        String language = "English";
+        String fileExtension = "pdf";
+
+        given()
+                .multiPart("file", getFile(filePath))
+                .formParam("language", language)
+                .formParam("fileExtension", fileExtension)
+                .formParam("contextLength", 5)
+                .contentType(ContentType.MULTIPART)
+                .when()
+                .post("/api/v1/extractor")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("exceptionMessage", org.hamcrest.Matchers.equalTo("File is too big"));
+
+    }
+
+
+    @Test
+    @Order(5)
     void shouldReturnResponseWhenParametersAreCorrectDocx() throws FileNotFoundException {
         String filePath = Paths.get("src", "test", "resources", "report.docx").toString();
         String language = "English";
@@ -76,6 +139,7 @@ class ItTests {
 
 
     @Test
+    @Order(6)
     void shouldReturnResponseWhenParametersAreCorrectTxt() throws FileNotFoundException {
         String filePath = Paths.get("src", "test", "resources", "PBSI.txt").toString();
         String language = "English";
@@ -92,7 +156,5 @@ class ItTests {
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
-
-
 
 }
