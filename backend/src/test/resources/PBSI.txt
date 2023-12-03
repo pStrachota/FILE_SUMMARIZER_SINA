@@ -1,0 +1,271 @@
+┌──(cti㉿kali)-[~]
+└─$ nikto -h 10.10.10.20
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          10.10.10.20
++ Target Hostname:    10.10.10.20
++ Target Port:        80
++ Start Time:         2023-03-15 09:47:05 (GMT1)
+---------------------------------------------------------------------------
++ Server: Microsoft-IIS/10.0
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ Allowed HTTP Methods: OPTIONS, TRACE, GET, HEAD, POST 
++ Public HTTP Methods: OPTIONS, TRACE, GET, HEAD, POST 
++ 7863 requests: 0 error(s) and 5 item(s) reported on remote host
++ End Time:           2023-03-15 09:47:22 (GMT1) (17 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
+                                                                             
+┌──(cti㉿kali)-[~]
+└─$ nikto -host 10.10.10.20:80 
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          10.10.10.20
++ Target Hostname:    10.10.10.20
++ Target Port:        80
++ Start Time:         2023-03-15 09:48:01 (GMT1)
+---------------------------------------------------------------------------
++ Server: Microsoft-IIS/10.0
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ Allowed HTTP Methods: OPTIONS, TRACE, GET, HEAD, POST 
++ Public HTTP Methods: OPTIONS, TRACE, GET, HEAD, POST 
++ 7863 requests: 0 error(s) and 5 item(s) reported on remote host
++ End Time:           2023-03-15 09:48:17 (GMT1) (16 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
+                                                                             
+┌──(cti㉿kali)-[~]
+└─$ nikto -list-plugins       
+Plugin: origin_reflection
+ CORS Origin Reflection - Check whether a given Origin header is reflected back in a Access-Control-Allow-Origin header
+ Written by ss23, Copyright (C) 2017 Chris Sullo
+
+Plugin: tests
+ Nikto Tests - Test host with the standard Nikto tests
+ Written by Sullo, Tautology, Copyright (C) 2008 Chris Sullo
+ Options:
+  report: Report a status after the passed number of tests
+  tids: A range of testids that will only be run
+  passfiles: Flag to indicate whether to check for common password files
+  all: Flag to indicate whether to check all files with all directories
+
+Plugin: content_search
+ Content Search - Search resultant content for interesting strings
+ Written by Sullo, Copyright (C) 2010 Chris Sullo
+
+Plugin: favicon
+ Favicon - Checks the web server's favicon against known favicons.
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+
+Plugin: put_del_test
+ Put/Delete test - Attempts to upload and delete files through the PUT and DELETE HTTP methods.
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+
+Plugin: httpoptions
+ HTTP Options - Performs a variety of checks against the HTTP options returned from the server.
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+
+Plugin: report_html
+ Report as HTML - Produces an HTML report.
+ Written by Sullo/Jabra, Copyright (C) 2008 Chris Sullo
+
+Plugin: clientaccesspolicy
+ clientaccesspolicy.xml - Checks whether a client access file exists, and if it contains a wildcard entry.
+ Written by Sullo, Dirk, Copyright (C) 2012 Chris Sullo and Dr. Wetter IT-Consulting
+
+Plugin: outdated
+ Outdated - Checks to see whether the web server is the latest version.
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+
+Plugin: auth
+ Guess authentication - Attempt to guess authentication realms
+ Written by Sullo/Tautology, Copyright (C) 2010 Chris Sullo
+
+Plugin: domino
+ IBM/Lotus Domino Specific Tests - Performs a selection of IBM/Louts Domino specific tests to identify Domino specific files accessible without authentication and the version of the server
+ Written by RealRancor, Copyright (C) 2016 Chris Sullo
+
+Plugin: report_csv
+ CSV reports - Produces a CSV report.
+ Written by Tautology, Copyright (C) 2008 Chris Sullo
+
+Plugin: report_sqlg
+ Generic SQL reports - Produces SQL inserts into a generic database.
+ Written by Sullo, Copyright (C) 2013 Chris Sullo
+
+Plugin: multiple_index
+ Multiple Index - Checks for multiple index files
+ Written by Tautology, Copyright (C) 2009 Chris Sullo
+
+Plugin: sitefiles
+ Site Files - Look for interesting files based on the site's IP/name
+ Written by sullo, Copyright (C) 2014 Chris Sullo
+
+Plugin: dictionary
+ Dictionary attack - Attempts to dictionary attack commonly known directories/files
+ Written by Tautology, Copyright (C) 2009 Chris Sullo
+ Options:
+  method: Method to use to enumerate.
+  dictionary: Dictionary of paths to look for.
+
+Plugin: ssl
+ SSL and cert checks - Perform checks on SSL/Certificates
+ Written by Sullo, Copyright (C) 2010 Chris Sullo
+
+Plugin: report_text
+ Text reports - Produces a text report.
+ Written by Tautology, Copyright (C) 2008 Chris Sullo
+
+Plugin: cookies
+ HTTP Cookie Internal IP - Looks for internal IP addresses in cookies returned from an HTTP request.
+ Written by Sullo, Copyright (C) 2010 Chris Sullo
+
+Plugin: report_xml
+ Report as XML - Produces an XML report.
+ Written by Sullo/Jabra, Copyright (C) 2008 Chris Sullo
+
+Plugin: cgi
+ CGI - Enumerates possible CGI directories.
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+
+Plugin: strutshock
+ strutshock - Look for the 'strutshock' vulnerability.
+ Written by Jeremy Bae, Copyright (C) 2017 Chris Sullo
+
+Plugin: paths
+ Path Search - Look at link paths to help populate variables
+ Written by Sullo, Copyright (C) 2012 Chris Sullo
+
+Plugin: headers
+ HTTP Headers - Performs various checks against the headers returned from an HTTP request.
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+
+Plugin: dir_traversal
+ Directory Traversal - Check applications / servers for directory traversal vulnerabilities.
+ Written by RealRancor, Copyright (C) 2016 Chris Sullo
+
+Plugin: embedded
+ Embedded Detection - Checks to see whether the host is an embedded server.
+ Written by Tautology, Copyright (C) 2009 Chris Sullo
+
+Plugin: dishwasher
+ dishwasher - Look for the dishwasher directory traversal vulnerability.
+ Written by Jeremy Bae, Copyright (C) 2017 Chris Sullo
+
+Plugin: apacheusers
+ Apache Users - Checks whether we can enumerate usernames directly from the web server
+ Written by Javier Fernandez-Sanguinoi Pena, Copyright (C) 2008 Chris Sullo
+ Options:
+  enumerate: Flag to indicate whether to attempt to enumerate users
+  cgiwrap: User cgi-bin/cgiwrap to enumerate
+  home: Look for ~user to enumerate
+  size: Maximum size of username if bruteforcing
+  dictionary: Filename for a dictionary file of users
+
+Plugin: apache_expect_xss
+ Apache Expect XSS - Checks whether the web servers has a cross-site scripting vulnerability through the Expect: HTTP header
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+
+Plugin: drupal
+ Drupal Specific Tests - Performs a selection of drupal specific tests
+ Written by Tautology, Copyright (C) 2014 Chris Sullo
+ Options:
+  0: Flag to tell plugin to enumerate modules
+  path: Basic path for modules (can usually be found in page source).
+
+Plugin: negotiate
+ Negotiate - Checks the mod_negotiation MultiViews.
+ Written by Sullo, Copyright (C) 2013 Chris Sullo
+
+Plugin: ms10_070
+ https://docs.microsoft.com/en-us/security-updates/securitybulletins/2010/ms10-070 Check - Determine if a site is vulnerable to https://docs.microsoft.com/en-us/security-updates/securitybulletins/2010/ms10-070
+ Written by Sullo, Copyright (C) 2013 Chris Sullo
+
+Plugin: report_nbe
+ NBE reports - Produces a NBE report.
+ Written by Seccubus, Copyright (C) 2010 Chris Sullo
+
+Plugin: fileops
+ File Operations - Saves results to a text file.
+ Written by Sullo, Copyright (C) 2012 Chris Sullo
+
+Plugin: report_json
+ JSON reports - Produces a JSON report.
+ Written by Gijs Kwakkel, Copyright (C) 2016 Chris Sullo
+
+Plugin: siebel
+ Siebel Checks - Performs a set of checks against an installed Siebel application
+ Written by Tautology, Copyright (C) 2011 Chris Sullo
+ Options:
+  languages: List of Languages
+  applications: List of applications
+  enumerate: Flag to indicate whether we shall attempt to enumerate known apps
+  application: Application to attack
+
+Plugin: docker_registry
+ docker_registry - Look for the docker registry
+ Written by Jeremy Bae, Copyright (C) 2018 Chris Sullo
+
+Plugin: shellshock
+ shellshock - Look for the bash 'shellshock' vulnerability.
+ Written by sullo, Copyright (C) 2014 Chris Sullo
+ Options:
+  uri: uri to assess
+
+Plugin: robots
+ Robots - Checks whether there's anything within the robots.txt file and analyses it for other paths to pass to other scripts.
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+ Options:
+  nocheck: Flag to disable checking entries in robots file.
+
+Plugin: parked
+ Parked Detection - Checks to see whether the host is parked at a registrar or ad location.
+ Written by Sullo, Copyright (C) 2011 Chris Sullo
+
+Plugin: msgs
+ Server Messages - Checks the server version against known issues.
+ Written by Sullo, Copyright (C) 2008 Chris Sullo
+
+Defined plugin macros:
+ @@ALL = "origin_reflection;tests;content_search;favicon;put_del_test;httpoptions;report_html;clientaccesspolicy;outdated;auth;domino;report_csv;report_sqlg;multiple_index;sitefiles;dictionary;ssl;report_text;cookies;report_xml;cgi;strutshock;paths;headers;dir_traversal;embedded;dishwasher;apacheusers;apache_expect_xss;drupal;negotiate;ms10_070;report_nbe;fileops;report_json;siebel;docker_registry;shellshock;robots;parked;msgs"
+ @@NONE = ""
+ @@DEFAULT = "@@ALL;-@@EXTRAS;tests(report:500)"
+  (expanded) = "report_csv;report_nbe;outdated;shellshock;fileops;robots;httpoptions;put_del_test;report_sqlg;apache_expect_xss;ssl;report_text;report_json;multiple_index;domino;auth;cgi;drupal;parked;report_html;sitefiles;apacheusers;cookies;msgs;favicon;ms10_070;headers;dir_traversal;report_xml;docker_registry;content_search;tests(report:500);negotiate;strutshock;origin_reflection;clientaccesspolicy;dishwasher;paths"
+ @@EXTRAS = "dictionary;siebel;embedded"
+                                                                             
+┌──(cti㉿kali)-[~]
+└─$ nikto -h nwa -Plugins test
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ ERROR: Invalid IP: 
+
+                                                                             
+┌──(cti㉿kali)-[~]
+└─$ nikto -h bwa -Plugins test
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          192.168.168.1
++ Target Hostname:    bwa
++ Target Port:        80
++ Start Time:         2023-03-15 09:49:03 (GMT1)
+---------------------------------------------------------------------------
++ Server: Apache/2.2.14 (Ubuntu) mod_mono/2.4.3 PHP/5.3.2-1ubuntu4.30 with Suhosin-Patch proxy_html/3.0.1 mod_python/3.3.1 Python/2.6.5 mod_ssl/2.2.14 OpenSSL/0.9.8k Phusion_Passenger/4.0.38 mod_perl/2.0.4 Perl/v5.10.1
++ OSVDB-3268: /cgi-bin/: Directory indexing found.
++ OSVDB-3092: /phpmyadmin/changelog.php: phpMyAdmin is for managing MySQL databases, and should be protected or limited to authorized hosts.
++ OSVDB-3092: /test/: This might be interesting...
++ OSVDB-3268: /icons/: Directory indexing found.
++ OSVDB-3268: /images/: Directory indexing found.
++ OSVDB-3233: /icons/README: Apache default file found.
++ /phpmyadmin/: phpMyAdmin directory found
++ OSVDB-3092: /phpmyadmin/Documentation.html: phpMyAdmin is for managing MySQL databases, and should be protected or limited to authorized hosts.
++ 24630 requests: 1 error(s) and 8 item(s) reported on remote host
++ End Time:           2023-03-15 09:50:04 (GMT1) (61 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
+                              
