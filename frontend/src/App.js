@@ -1,15 +1,16 @@
-import axios from "axios";
-import "./App.css";
 import React, { useCallback, useState } from "react";
+import axios from "axios";
+import FileViewer from "./components/FileViewer";
+import FileUpload from "./components/FileUpload";
 import { toast, ToastContainer } from "react-toastify";
-import icon from "./logo.svg";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [file, setFile] = useState(null);
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [sliderValue, setSliderValue] = useState(5);
-  const [selectedLanguage, setSelectedLanguage] = useState("polish");
+  const [selectedLanguage, setSelectedLanguage] = useState("Polish");
 
   const onFileChange = useCallback((event) => {
     setResponse("");
@@ -20,7 +21,7 @@ function App() {
       } else {
         setFile(null);
         toast(
-          "Plik musi być mniejszy niż 2MB i mieć rozszerzenie .pdf, .txt, .docx",
+          "The file must be smaller than 2MB and have the extension .pdf, .txt, .docx, .pptx",
           {
             type: "error",
           }
@@ -54,34 +55,55 @@ function App() {
         setResponse(response.data);
         setLoading(false);
       } catch (error) {
-        if (
-          error.response.data.exceptionMessage.includes(
-            "context_length_exceeded"
-          )
-        ) {
-          toast("Zbyt długi tekst. Spróbuj ponownie z innym plikiem.", {
+        if (error.response.data && error.response.data.exceptionMessage) {
+          if (
+            error.response.data.exceptionMessage.includes(
+              "File content is too long"
+            ) ||
+            error.response.data.exceptionMessage.includes(
+              "context_length_exceeded"
+            )
+          ) {
+            toast("Text too long. Please try again with a different file.", {
+              type: "error",
+            });
+          } else if (
+            error.response.data.exceptionMessage.includes("no_text_found")
+          ) {
+            toast(
+              "No text found in the PDF file. Please try again with a different file.",
+              {
+                type: "error",
+              }
+            );
+          } else if (
+            error.response.data.exceptionMessage.includes(
+              "Cannot read text from PDF file"
+            )
+          ) {
+            toast(
+              "Cannot read text from PDF file. Please try again with a different file.",
+              {
+                type: "error",
+              }
+            );
+          } else if (
+            error.response.data.exceptionMessage.includes(
+              "File content is empty"
+            )
+          ) {
+            toast(
+              "The file contains no content. Please try again with a different file.",
+              {
+                type: "error",
+              }
+            );
+          }
+        } else {
+          toast("Unknown error. Please try again later.", {
             type: "error",
           });
-        } else if (
-          error.response.data.exceptionMessage.includes("no_text_found")
-        ) {
-          toast(
-            "Nie znaleziono tekstu w pliku PDF. Spróbuj ponownie z innym plikiem.",
-            {
-              type: "error",
-            }
-          );
-        } else if (
-          error.response.data.exceptionMessage.includes(
-            "Cannot read text from PDF file"
-          )
-        ) {
-          toast(
-            "Nie można odczytać tekstu z pliku PDF. Spróbuj ponownie z innym plikiem.",
-            {
-              type: "error",
-            }
-          );
+          console.error(error);
         }
         setResponse("");
         setLoading(false);
@@ -98,10 +120,26 @@ function App() {
   };
 
   return (
-    <div className="App container mx-auto">
-      <header className="App-header">Tekst</header>
-      <ToastContainer position="top-center" autoClose={2000} />
-    </div>
+    <>
+      <div className="bg-white p-4 text-black shadow-xl flex items-center">
+        <img className="mr-2 max-h-14 w-70" src="/logo2.jpg" />
+        <p className="text-purple-500 text-2xl">File summarizer</p>
+      </div>
+      <div className="mx-8  my-8 flex flex-row">
+        <FileUpload
+          onFileChange={onFileChange}
+          handleUpload={handleUpload}
+          loading={loading}
+          response={response}
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={handleLanguageChange}
+          sliderValue={sliderValue}
+          onSliderChange={handleSliderChange}
+        />
+        <FileViewer viewPdf={file} />
+        <ToastContainer position="top-center" autoClose={2000} />
+      </div>
+    </>
   );
 }
 
