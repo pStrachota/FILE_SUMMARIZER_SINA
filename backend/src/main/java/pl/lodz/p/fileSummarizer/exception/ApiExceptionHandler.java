@@ -78,14 +78,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiExceptionResponse, new HttpHeaders(), apiExceptionResponse.getHttpStatus());
     }
 
-    @ExceptionHandler(CannotReadTextException.class)
-    public final ResponseEntity<Object> handleCannotReadTextFromPdfException(CannotReadTextException ex,
+    @ExceptionHandler(EmptyFileContentException.class)
+    public final ResponseEntity<Object> handleCannotReadTextFromPdfException(EmptyFileContentException ex,
                                                                              WebRequest request) {
-        ApiExceptionResponse apiExceptionResponse =
+        ApiExceptionResponse apiException =
                 new ApiExceptionResponse(ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST,
                         List.of(request.getDescription(false)), LocalDateTime.now());
 
-        return new ResponseEntity<>(apiExceptionResponse, new HttpHeaders(), apiExceptionResponse.getHttpStatus());
+        return new ResponseEntity<>(apiException, new HttpHeaders(), apiException.getHttpStatus());
     }
 
     @ExceptionHandler(FileSizeLimitExceededException.class)
@@ -96,6 +96,59 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                         List.of(request.getDescription(false)), LocalDateTime.now());
 
         return new ResponseEntity<>(apiExceptionResponse, new HttpHeaders(), apiExceptionResponse.getHttpStatus());
+    }
+
+    @ExceptionHandler(FileTooBigException.class)
+    public final ResponseEntity<Object> handleFileTooBigException(FileTooBigException ex,
+                                                                  WebRequest request) {
+        ApiExceptionResponse apiException =
+                new ApiExceptionResponse(ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST,
+                        List.of(request.getDescription(false)), LocalDateTime.now());
+
+        return new ResponseEntity<>(apiException, new HttpHeaders(), apiException.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(FileContentTooLongException.class)
+    public final ResponseEntity<Object> handleFileContentTooLongException(FileContentTooLongException ex,
+                                                                          WebRequest request) {
+        ApiExceptionResponse apiException =
+                new ApiExceptionResponse(ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST,
+                        List.of(request.getDescription(false)), LocalDateTime.now());
+
+        return new ResponseEntity<>(apiException, new HttpHeaders(), apiException.getHttpStatus());
+    }
+
+    @ExceptionHandler(IllegalFileExtensionException.class)
+    public final ResponseEntity<Object> handleIllegalFileExtensionException(IllegalFileExtensionException ex,
+                                                                            WebRequest request) {
+        ApiExceptionResponse apiException =
+                new ApiExceptionResponse(ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST,
+                        List.of(request.getDescription(false)), LocalDateTime.now());
+
+        return new ResponseEntity<>(apiException, new HttpHeaders(), apiException.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(InvalidContextLengthException.class)
+    public final ResponseEntity<Object> handleInvalidContextLengthException(InvalidContextLengthException ex,
+                                                                            WebRequest request) {
+        ApiExceptionResponse apiException =
+                new ApiExceptionResponse(ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST,
+                        List.of(request.getDescription(false)), LocalDateTime.now());
+
+        return new ResponseEntity<>(apiException, new HttpHeaders(), apiException.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(UnsupportedLanguageException.class)
+    public final ResponseEntity<Object> handleUnsupportedLanguageException(UnsupportedLanguageException ex,
+                                                                           WebRequest request) {
+        ApiExceptionResponse apiException =
+                new ApiExceptionResponse(ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST,
+                        List.of(request.getDescription(false)), LocalDateTime.now());
+
+        return new ResponseEntity<>(apiException, new HttpHeaders(), apiException.getHttpStatus());
     }
 
     @ExceptionHandler(GeneralException.class)
